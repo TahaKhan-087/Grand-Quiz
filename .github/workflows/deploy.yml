@@ -1,0 +1,31 @@
+on:
+push:
+branch: main
+
+permissions:
+content: write
+
+jobs:
+deploy:
+runs on: ubantu-latest
+
+steps:
+- name: checkout repository
+uses: actions/checkout@v3
+
+- name: Setup Node.js
+uses: actions/setup-node@v3
+with:
+node-version:18
+
+- name: install dependencies
+run: npm install
+
+- name: Build react app
+run: npm run build
+
+peaceiris/actions-gh-pages@v3
+with:
+github_token: ${{secret.DEPLOY}}
+
+publish_dir. ./build
